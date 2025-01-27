@@ -35,12 +35,13 @@ A Flask-based API for managing users, including authentication, CRUD operations,
 
 ## Setup
 
-- Configure the database in config/config.py
-
 1. Clone the repository:
    ```bash
    git clone <repo-url>
    ```
+2. Ensure the database is set up with a users table and an accessibility_view for role-based access.
+
+3. Configure the database in config/config.py
 
 ## Run the app:
 
