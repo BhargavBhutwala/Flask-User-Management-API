@@ -9,6 +9,7 @@ A Flask-based API for managing users, including authentication, CRUD operations,
 - **Pagination**: Fetch users with pagination support.
 - **File Uploads**: Upload and retrieve user avatars.
 - **Secure JWT Handling**: Token expiry and validation mechanisms.
+- **Request Validation**: Uses Marshmallow to validate incoming request data.
 
 ## Endpoints
 

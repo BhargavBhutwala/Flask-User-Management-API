@@ -1,11 +1,15 @@
+from marshmallow import ValidationError
 from app import app
 from model.user_model import User
 from model.auth_model import Auth
-from flask import request, send_file
+from flask import request, send_file, make_response
 from datetime import datetime
+from schemas import UserSchema, UserPatchSchema
 
 user = User()
 auth = Auth()
+user_schema = UserSchema()
+user_patch_schema = UserPatchSchema()
 
 @app.route('/user/')
 @auth.token_auth()
@@ -16,13 +20,21 @@ def getAllUsers():
 @auth.token_auth()
 def addUser():
    # print(request.form)
-   return user.addUser(request.form)
+   try:
+      data = user_schema.load(request.form)
+   except ValidationError as err:
+      return make_response({"error": err.messages}, 400)
+   return user.addUser(data)
 
 @app.route('/user/update', methods=['PUT'])
 @auth.token_auth()
 def updateUser():
    # print(request.form)
-   return user.updateUser(request.form)
+   try:
+      data = user_schema.load(request.form)
+   except ValidationError as err:
+      return make_response({"error": err.messages}, 400)
+   return user.updateUser(data)
 
 @app.route('/user/delete/<id>', methods=['DELETE'])
 @auth.token_auth()
@@ -34,7 +46,11 @@ def deleteUser(id):
 @auth.token_auth()
 def patchUser(id):
    # print(request.form)
-   return user.patchUser(id, request.form)
+   try:
+      data = user_patch_schema.load(request.form)
+   except ValidationError as err:
+      return make_response({"error": err.messages}, 400)
+   return user.patchUser(id, data)
 
 @app.route('/user/getall/limit/<limit>/page/<page>', methods=['GET'])
 @auth.token_auth()
