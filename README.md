@@ -38,7 +38,7 @@ A Flask-based API for managing users, including authentication, CRUD operations,
 
 1. Clone the repository:
    ```bash
-   git clone <repo-url>
+   git clone https://github.com/BhargavBhutwala/Flask-User-Management-API
    ```
 2. Ensure the database is set up with a users table and an accessibility_view for role-based access.
 
