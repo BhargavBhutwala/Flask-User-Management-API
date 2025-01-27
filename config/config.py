@@ -1,6 +1,6 @@
 dbconfig = {
    "host": "localhost",
    "user": "root",
-   "password": "BHarggav@0037",
+   "password": "",
    "database": "flask_app"
 }
