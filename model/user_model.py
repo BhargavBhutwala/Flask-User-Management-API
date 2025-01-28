@@ -30,7 +30,7 @@ class User:
       # print(rows)
       if len(rows)>0:
          result = make_response({'payload': rows}, 200)
-         result.headers['Access-Control-Allow-Origin'] = '*'
+         # result.headers['Access-Control-Allow-Origin'] = '*'
          return result
       else:
          return make_response({'message': "No users found"}, 204)

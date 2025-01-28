@@ -2,7 +2,7 @@ from marshmallow import ValidationError
 from app import app
 from model.user_model import User
 from model.auth_model import Auth
-from flask import request, send_file, make_response
+from flask import request, send_file, make_response, jsonify
 from datetime import datetime
 from schemas import UserSchema, UserPatchSchema
 
@@ -16,12 +16,19 @@ user_patch_schema = UserPatchSchema()
 def getAllUsers():
    return user.getAllUsers()
 
-@app.route('/user/add', methods=['POST'])
-@auth.token_auth()
+@app.route('/user/add', methods=['POST', 'OPTIONS'])
 def addUser():
    # print(request.form)
+   if request.method == 'OPTIONS':
+      # Handling preflight request (OPTIONS)
+      if request.method == 'OPTIONS':  # Handle preflight request
+         response = jsonify({"message": "Preflight request handled"})
+         response.headers.add("Access-Control-Allow-Origin", "http://localhost:4200")
+         response.headers.add("Access-Control-Allow-Methods", "POST, OPTIONS")
+         response.headers.add("Access-Control-Allow-Headers", "Content-Type, Authorization")
+         return response
    try:
-      data = user_schema.load(request.form)
+      data = user_schema.load(request.json)
    except ValidationError as err:
       return make_response({"error": err.messages}, 400)
    return user.addUser(data)
